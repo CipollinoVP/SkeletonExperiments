@@ -28,7 +28,7 @@ def get_sizes(skelet):
     sizes = {}
     for nod in skelet.nodes:
         if nod.translation and nod.scale:
-            size = np.linalg.norm(np.array(nod.translation) * np.array(node.scale))
+            size = np.linalg.norm(np.array(nod.translation) * np.array(nod.scale))
         else:
             size = 0
         sizes[nod.name] = size
@@ -37,7 +37,7 @@ def get_sizes(skelet):
 
 def append_by_num(skelet, sizes, num, prev_vec, start):
     nod = skelet.nodes[num]
-    name = nod["name"]
+    name = nod.name
 
     quat = Rotation.from_quat(nod.rotation)
     vector = quat.apply(prev_vec)
@@ -52,7 +52,7 @@ def append_by_num(skelet, sizes, num, prev_vec, start):
     return vecs
 
 
-path_to_glb = "CharAdoptisLow.glb"
+path_to_glb = "model_low.glb"
 skelet = skeleton(path_to_glb)
 sizes = get_sizes(skelet)
 
@@ -67,8 +67,13 @@ ax.set_ylabel('Y-axis')
 ax.set_zlabel('Z-axis')
 ax.set_title('3D Vector Field')
 
-quiver = ax.quiver([], [], [], [], [], [])
+data = append_by_num(skelet, sizes, len(skelet.nodes) - 1, np.array([1, 0, 0]), np.array([0, 0, 0]))
 
-n_frames = len(anim["CC_Base_Hip"]) // 4
+Quiver = [[], [], [], [], [], []]
+for dat in data:
+    for i in range(len(Quiver)):
+        Quiver[i].append(dat[i])
 
-ani = FuncAnimation(fig, update, frames=n_frames, fargs=(data, anim, sizes, quiver), interval=100, blit=False)
+quiver = ax.quiver(Quiver[0], Quiver[1], Quiver[2], Quiver[3], Quiver[4], Quiver[5])
+
+plt.show()
