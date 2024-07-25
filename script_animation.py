@@ -9,25 +9,7 @@ from skelet_pose import *
 rc('animation', html='jshtml')
 
 
-def update(num, skelet, anim, sizes, quiver):
-    start_num = len(skelet.nodes) - 1
-    skeleton_vec = append_by_num_anim(skelet, sizes, start_num, np.array([1, 0, 0]), np.array([0, 0, 0]), num, anim)
-
-    X, Y, Z, U, V, W = [], [], [], [], [], []
-    for vec in skeleton_vec:
-        X.append(vec[0])
-        Y.append(vec[1])
-        Z.append(vec[2])
-        U.append(vec[3])
-        V.append(vec[4])
-        W.append(vec[5])
-
-    segments = [[(x, y, z), (x + u, y + v, z + w)] for x, y, z, u, v, w in zip(X, Y, Z, U, V, W)]
-    quiver.set_segments(segments)
-    return quiver,
-
-
-animation_path = "m_78_Motion_out/m_78_Motion.gltf"
+animation_path = "m_74_Motion_out/m_74_Motion.gltf"
 pose_path = "model_low.glb"
 
 skelet = skeleton(pose_path)
