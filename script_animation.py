@@ -1,18 +1,16 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import rc
 from matplotlib.animation import FuncAnimation
 
-from skelet_pose import *
 from skelet_animation import *
 from skelet_pose import *
-
-import matplotlib.pyplot as plt
-from matplotlib import rc
-import numpy as np
 
 rc('animation', html='jshtml')
 
 
 def update(num, skelet, anim, sizes, quiver):
-    start_num = skelet.nodes[-1].children[0]
+    start_num = len(skelet.nodes) - 1
     skeleton_vec = append_by_num_anim(skelet, sizes, start_num, np.array([1, 0, 0]), np.array([0, 0, 0]), num, anim)
 
     X, Y, Z, U, V, W = [], [], [], [], [], []
@@ -24,7 +22,8 @@ def update(num, skelet, anim, sizes, quiver):
         V.append(vec[4])
         W.append(vec[5])
 
-    quiver.set_segments([[[x, y, z], [x + u, y + v, z + w]] for x, y, z, u, v, w in zip(X, Y, Z, U, V, W)])
+    segments = [[(x, y, z), (x + u, y + v, z + w)] for x, y, z, u, v, w in zip(X, Y, Z, U, V, W)]
+    quiver.set_segments(segments)
     return quiver,
 
 
@@ -46,11 +45,10 @@ ax.set_ylabel('Y-axis')
 ax.set_zlabel('Z-axis')
 ax.set_title('3D Vector Field')
 
-quiver = ax.quiver([], [], [], [], [], [])
+quiver = ax.quiver([], [], [], [], [], [], pivot='tail')
 
 n_frames = len(animation["CC_Base_Hip"]["times"])
 
 anim = FuncAnimation(fig, update, frames=n_frames, fargs=(skelet, animation, sizes, quiver), interval=100, blit=False)
 
 plt.show()
-

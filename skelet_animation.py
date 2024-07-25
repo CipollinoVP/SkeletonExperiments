@@ -1,8 +1,5 @@
-from skelet_pose import *
-
-from pygltflib import GLTF2
-
 import numpy as np
+from pygltflib import GLTF2
 from scipy.spatial.transform import Rotation
 
 
@@ -12,9 +9,10 @@ def append_by_num_anim(skelet, sizes, num, prev_vec, start, i, animation):
 
     if name in animation:
         rotation = animation[name]["rotations"][4 * i: 4 * i + 4]
-        quat = Rotation.from_quat(rotation)
     else:
-        quat = Rotation.from_quat(nod.rotation)
+        rotation = nod.rotation
+
+    quat = Rotation.from_quat(rotation)
     vector = quat.apply(prev_vec)
 
     shift = sizes[name] * vector
@@ -92,7 +90,8 @@ def get_quat(gltf_path):
         if target_path == "rotation":
             out_dict[node_name] = {"times": [], "rotations": []}
             for time, value in zip(input_data, output_data):
-                out_dict[node_name]["times"].append(time)
-                out_dict[node_name]["rotations"].append(value)
+                out_dict[node_name]["times"].append(time[0])
+                for i in range(4):
+                    out_dict[node_name]["rotations"].append(value[i])
 
     return out_dict

@@ -1,5 +1,5 @@
-from pygltflib import GLTF2
 import numpy as np
+from pygltflib import GLTF2
 from scipy.spatial.transform import Rotation
 
 

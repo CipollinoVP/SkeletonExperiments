@@ -1,6 +1,7 @@
-from skelet_pose import *
 import matplotlib.pyplot as plt
 import numpy as np
+
+from skelet_pose import *
 
 path_to_glb = "model_low.glb"
 skelet = skeleton(path_to_glb)
