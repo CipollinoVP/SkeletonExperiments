@@ -31,17 +31,17 @@ def get_video_vecs(data):
 
 
 def objective_function(vecs, skelet: skeleton):
-    min = 2.
+    max = 0.
     for item in vecs:
         coord1 = skelet.get_by_name(item[0]).coord
         coord2 = skelet.get_by_name(item[1]).coord
         local_vec = coord1 - coord2
         local_vec = local_vec / np.linalg.norm(local_vec)
         local_objective = np.linalg.norm(item[2] - local_vec)
-        if local_objective < min:
-            min = local_objective
+        if local_objective > max:
+            max = local_objective
 
-    return min
+    return max
 
 
 pose_data = np.load('pose_data.npy', allow_pickle=True)
