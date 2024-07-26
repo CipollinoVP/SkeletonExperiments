@@ -3,10 +3,8 @@ import numpy as np
 
 from skelet_pose import *
 
-path_to_glb = "model_low.glb"
+path_to_glb = "CharAdoptisLow.glb"
 skelet = skeleton(path_to_glb)
-
-sizes = get_sizes(skelet)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -19,7 +17,14 @@ ax.set_ylabel('Y-axis')
 ax.set_zlabel('Z-axis')
 ax.set_title('3D Vector Field')
 
-data = append_by_num(skelet, sizes, len(skelet.nodes) - 1, np.array([1, 0, 0]), np.array([0, 0, 0]))
+data = append_by_num(skelet, len(skelet.nodes) - 1, np.array([1, 0, 0]), np.array([0, 0, 0]))
+
+for i in range(len(skelet.nodes)):
+    print("       ")
+    print(i)
+    print(skelet.nodes[i].name)
+    for j in range(len(skelet.nodes[i].children)):
+        print(skelet.nodes[i].children[j])
 
 Quiver = [[], [], [], [], [], []]
 for dat in data:

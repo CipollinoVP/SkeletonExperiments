@@ -3,7 +3,7 @@ from pygltflib import GLTF2
 from scipy.spatial.transform import Rotation
 
 
-def append_by_num_anim(skelet, sizes, num, prev_vec, start, i, animation):
+def append_by_num_anim(skelet, num, prev_vec, start, i, animation):
     nod = skelet.nodes[num]
     name = nod.name
 
@@ -15,13 +15,13 @@ def append_by_num_anim(skelet, sizes, num, prev_vec, start, i, animation):
     quat = Rotation.from_quat(rotation)
     vector = quat.apply(prev_vec)
 
-    shift = sizes[name] * vector
+    shift = nod.size * vector
     final_point = start + shift
     vecs = [[start[0], start[1], start[2], shift[0], shift[1], shift[2]]]
 
     if nod.children:
         for j in nod.children:
-            vecs += append_by_num_anim(skelet, sizes, j, vector, final_point, i, animation)
+            vecs += append_by_num_anim(skelet, j, vector, final_point, i, animation)
     return vecs
 
 
@@ -97,9 +97,9 @@ def get_quat(gltf_path):
     return out_dict
 
 
-def update(num, skelet, anim, sizes, quiver):
+def update(num, skelet, anim, quiver):
     start_num = len(skelet.nodes) - 1
-    skeleton_vec = append_by_num_anim(skelet, sizes, start_num, np.array([1, 0, 0]), np.array([0, 0, 0]), num, anim)
+    skeleton_vec = append_by_num_anim(skelet, start_num, np.array([1, 0, 0]), np.array([0, 0, 0]), num, anim)
 
     X, Y, Z, U, V, W = [], [], [], [], [], []
     for vec in skeleton_vec:

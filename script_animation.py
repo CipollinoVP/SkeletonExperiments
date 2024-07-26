@@ -14,7 +14,6 @@ pose_path = "model_low.glb"
 
 skelet = skeleton(pose_path)
 animation = get_quat(animation_path)
-sizes = get_sizes(skelet)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -31,6 +30,6 @@ quiver = ax.quiver([], [], [], [], [], [], pivot='tail')
 
 n_frames = len(animation["CC_Base_Hip"]["times"])
 
-anim = FuncAnimation(fig, update, frames=n_frames, fargs=(skelet, animation, sizes, quiver), interval=100, blit=False)
+anim = FuncAnimation(fig, update, frames=n_frames, fargs=(skelet, animation, quiver), interval=100, blit=False)
 
 plt.show()
