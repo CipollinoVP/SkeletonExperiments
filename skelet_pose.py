@@ -46,10 +46,10 @@ class skeleton:
         self.nodes[self.base_node].refresh(self, start_vec, start_coord)
 
     def get_by_name(self, name: str):
-        for nod in self.nodes:
-            if name == nod.name:
-                return nod
-        return 0
+        for i in range(len(self.nodes)):
+            if name == self.nodes[i].name:
+                return i
+        return -1
 
 
 def get_sizes(skelet):

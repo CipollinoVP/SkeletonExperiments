@@ -13,3 +13,25 @@ point_bones = {
     "CC_Base_R_Pinky3": 18,
     "CC_Base_Hip": [23, 24]
 }
+
+start_quat = {
+    "CC_Base_L_Upperarm": [23, 11, 13],
+    "CC_Base_R_Upperarm": [24, 12, 14],
+    "CC_Base_L_Forearm": [11, 13, 15],
+    "CC_Base_R_Forearm": [12, 14, 16]
+}
+
+bones_in_task = [
+    "CC_Base_R_Upperarm",
+    "CC_Base_R_Forearm",
+    "CC_Base_R_Hand",
+    "CC_Base_R_Pinky1",
+    "CC_Base_R_Pinky2",
+    "CC_Base_R_Pinky3",
+    "CC_Base_L_Upperarm",
+    "CC_Base_L_Forearm",
+    "CC_Base_L_Hand",
+    "CC_Base_L_Pinky1",
+    "CC_Base_L_Pinky2",
+    "CC_Base_L_Pinky3"
+]
