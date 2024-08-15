@@ -15,8 +15,8 @@ point_bones = {
 }
 
 start_quat = {
-    "CC_Base_L_Upperarm": [23, 11, 13],
-    "CC_Base_R_Upperarm": [24, 12, 14],
+    "CC_Base_L_Upperarm": [12, 11, 13],
+    "CC_Base_R_Upperarm": [11, 12, 14],
     "CC_Base_L_Forearm": [11, 13, 15],
     "CC_Base_R_Forearm": [12, 14, 16]
 }

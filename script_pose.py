@@ -17,7 +17,7 @@ ax.set_ylabel('Y-axis')
 ax.set_zlabel('Z-axis')
 ax.set_title('3D Vector Field')
 
-data = append_by_num(skelet, len(skelet.nodes) - 1, np.array([1, 0, 0]), np.array([0, 0, 0]))
+data = append_by_num(skelet, len(skelet.nodes) - 1, np.array([-1, 0, 0]), np.array([0, 0, 0]))
 
 for i in range(len(skelet.nodes)):
     print("       ")

@@ -41,7 +41,7 @@ class skeleton:
                 break
 
     def refresh(self):
-        start_vec = np.array([1, 0, 0])
+        start_vec = np.array([-1, 0, 0])
         start_coord = np.array([0, 0, 0])
         self.nodes[self.base_node].refresh(self, start_vec, start_coord)
 

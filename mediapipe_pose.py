@@ -1,17 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Пример координат точек
-points = {
-    0: [0.5, 0.9],
-    1: [0.55, 0.95],
-    2: [0.45, 0.95],
-    3: [0.5, 1.0],
-    4: [0.6, 0.9],
-    5: [0.4, 0.9],
-    # Дополните остальными точками
-}
-
 # Пример соединений между точками
 connections = [
     # Соединения на голове
@@ -41,10 +30,10 @@ for start, end in connections:
     start_point = pose_data[0][start]
     end_point = pose_data[0][end]
 
-    ax.quiver(start_point[0], start_point[1], start_point[2],
-              end_point[0] - start_point[0],
+    ax.quiver(start_point[1], start_point[2], start_point[0],
               end_point[1] - start_point[1],
               end_point[2] - start_point[2],
+              end_point[0] - start_point[0],
               color='black')
 
 # Настройка осей

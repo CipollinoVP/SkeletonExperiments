@@ -34,7 +34,7 @@ def extract_pose_from_video(video_path):
 
 
 # Путь к вашему видеофайлу
-video_path = './videos/cross.mp4'
+video_path = './videos/nothing.mp4'
 pose_data = extract_pose_from_video(video_path)
 
 # Сохранение numpy массива в файл, если это необходимо
