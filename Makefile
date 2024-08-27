@@ -3,3 +3,4 @@ preinstal:
 	pip install numpy
 	pip install pygltflib
 	pip install scipy
+	pip install mediapipe

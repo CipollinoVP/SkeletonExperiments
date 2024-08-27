@@ -17,6 +17,13 @@ class node:
         self.father = -1
         self.coord = [0, 0, 0]
 
+    def refresh(self, skelet, start_vec, start_coord):
+        quat = Rotation.from_quat(self.rotation)
+        vector = quat.apply(start_vec)
+        self.coord = start_coord + vector
+        for i in self.children:
+            skelet.nodes[i].refresh(skelet, vector, self.coord)
+
 
 class skeleton:
     def __init__(self, glb_file_path):
@@ -32,6 +39,17 @@ class skeleton:
             if self.nodes[i].father == -1:
                 self.base_node = i
                 break
+
+    def refresh(self):
+        start_vec = np.array([-1, 0, 0])
+        start_coord = np.array([0, 0, 0])
+        self.nodes[self.base_node].refresh(self, start_vec, start_coord)
+
+    def get_by_name(self, name: str):
+        for i in range(len(self.nodes)):
+            if name == self.nodes[i].name:
+                return i
+        return -1
 
 
 def get_sizes(skelet):
