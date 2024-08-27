@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from mpl_toolkits.mplot3d.art3d import Line3DCollection
+from matplotlib.animation import FuncAnimation
 
 # Пример соединений между точками
 connections = [
@@ -19,26 +21,38 @@ connections = [
     (28, 30), (29, 31), (30, 32), (31, 32)
 ]
 
+def update(num, pose_data, lines):
+    segments = []
+    for start, end in connections:
+        start_point = pose_data[num][start][0:3]
+        end_point = pose_data[num][end][0:3]
+        segments.append([start_point, end_point])
+    # Update the segments in the Line3DCollection
+    lines.set_segments(segments)
+    return lines,
+
 pose_data = np.load('pose_data.npy', allow_pickle=True)
 
 # Настройка графика
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-# Отрисовка соединений с помощью quiver
-for start, end in connections:
-    start_point = pose_data[0][start]
-    end_point = pose_data[0][end]
+ax.set_xlim([0, 1])
+ax.set_ylim([0, 1])
+ax.set_zlim([0, 1])
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_zlabel('Z-axis')
+ax.set_title('3D Vector Field')
 
-    ax.quiver(start_point[1], start_point[2], start_point[0],
-              end_point[1] - start_point[1],
-              end_point[2] - start_point[2],
-              end_point[0] - start_point[0],
-              color='black')
+# Create an initial set of segments as a placeholder
+initial_segments = [[[0, 0, 0], [0, 0, 0]]]
+lines = Line3DCollection(initial_segments, linewidths=2)
+ax.add_collection3d(lines)
 
-# Настройка осей
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z')
+n_frames = len(pose_data)
+
+# Анимация
+anim = FuncAnimation(fig, update, frames=n_frames, fargs=(pose_data, lines), interval=100, blit=False)
 
 plt.show()
